@@ -2,8 +2,9 @@
 yum -y install httpd
 chkconfig httpd on
 service httpd start
+service iptables stop
 f=/var/www/html/index.html
 rm -f $f
-echo "<html><head><title>Vagrant built example system</title><body>" > $f
+echo "<html><head><title>Nepho built example system</title></head><body>" > $f
 echo "<pre>System $(hostname) built on $(date).</pre>" >> $f
 echo "</body></html>" >> $f

@@ -1,33 +1,25 @@
 VAGRANTFILE_API_VERSION = "2"
 
-box      = 'centos6p5'
-url      = 'https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box'
-ram      = '615'
+n_box_name    = ENV.fetch('NEPHO_BoxName',          'CentOS-6.4-x86_64')
+n_box_url     = ENV.fetch('NEPHO_BoxUrl',           'http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box')
 
-$script = <<SCRIPT
-yum -y install httpd
-chkconfig httpd on
-service httpd start
-f=/var/www/html/index.html
-rm -f $f
-echo "<html><head><title>Vagrant built example system</title><body>" > $f
-echo "<pre>System $(hostname) built on $(date).</pre>" >> $f
-echo "</body></html>" >> $f
-SCRIPT
+n_guest_type  = ENV.fetch('NEPHO_GuestType',        'linux')
+n_payload_dir = '/var/lib/nepho'
+
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box_url = url
-  config.vm.box     = box
+  config.vm.box_url = n_box_url
+  config.vm.box     = n_box_name
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
-  config.vm.synced_folder ".", "/vagrant_data"
+  # Mount a shared folder containing the cloudlet's data files
+  config.vm.synced_folder File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "payload")), n_payload_dir 
 
-  config.vm.provider :virtualbox do |vb|
-    vb.customize [ 'modifyvm', :id, '--memory', ram]
-  end
-
-  config.vm.provision "shell", inline: $script
+  # Call Nepho provisioning scripts if they exist and are executable
+  path = File.join(n_payload_dir, 'hooks', 'bootstrap')
+  config.vm.provision :shell, :inline => \
+    "[[ -x #{path} ]] && (echo Running #{path}; #{path})"
 
 end
