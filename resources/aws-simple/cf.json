@@ -34,7 +34,7 @@
             }
           }
         }
-      }
+      },
       "Properties" : {
         "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
         "KeyName" : { "Ref" : "KeyName" },
@@ -43,6 +43,10 @@
         "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
           "#!/bin/bash\n",
           "yum update -y aws-cfn-bootstrap\n",
+          
+          "/opt/aws/bin/cfn-init -v --stack ", { "Ref" : "AWS::StackId" }, 
+               " --resource Ec2Instance ",
+               " --region ", { "Ref" : "AWS::Region" }, "\n",
 
           "bash /var/lib/nepho/hooks/bootstrap\n",
 
