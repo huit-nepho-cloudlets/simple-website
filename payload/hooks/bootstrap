@@ -1,0 +1,9 @@
+#!/bin/bash
+yum -y install httpd
+chkconfig httpd on
+service httpd start
+f=/var/www/html/index.html
+rm -f $f
+echo "<html><head><title>Vagrant built example system</title><body>" > $f
+echo "<pre>System $(hostname) built on $(date).</pre>" >> $f
+echo "</body></html>" >> $f

@@ -1,0 +1,13 @@
+--- # nepho-example
+version: 1.0.0
+format: 1
+source: https://github.com:cloudlets/simple-example.git
+author: Harvard University Information Technology
+license: MIT
+summary: An simple cloudlet that demonstrates deploying a websitre via vagrant or on AWS.
+description: >
+  This is a simple example cloudlet that demonstrates using 
+  vagrant or AWS to deploy the same (very simple) website.
+projectpage: http://github.com/huit/nepho
+parameters:
+  AWSRegion: us-east-1

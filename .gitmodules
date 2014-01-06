@@ -1,0 +1,3 @@
+[submodule "resources/common/aws"]
+	path = resources/common/aws
+	url = https://github.com/cloudlets/aws-template-library.git

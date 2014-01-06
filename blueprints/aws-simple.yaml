@@ -1,0 +1,8 @@
+--- # aws-simple
+summary: A single page website
+description: >
+  This simple example creates a single public Amazon Linux instance on EC2 
+  and deploys a single page website
+provider: aws
+parameters:
+  InstanceType: t1.micro

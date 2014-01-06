@@ -1,0 +1,10 @@
+--- # vagrant-simple
+summary: A single Vagrant CentOS 6 box that hosts a single page website
+description: >
+  This simple example creates a single local CentOS 6 box with bootstraps
+  and deploys a single page website
+provider: vagrant
+parameters:
+  BoxName: centos6p5
+  BoxUrl: "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box"
+
